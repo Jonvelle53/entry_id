@@ -3,6 +3,13 @@
 ! Erstellt für: AdGuard Home (Home Assistant Add-on)
 ! Letzte Aktualisierung: 2026-06-02
 !
+! Senderwechsel-Ablauf (beobachtet im DNS-Log):
+!   1. technisat.wifiradiofrontier.com    → Portal-Lookup (funktional, NICHT blocken)
+!   2. frontend.streamonkey.net           → StreamMonkey API: Playlist-URL + Listener-Tracking
+!   3. edge17/72.streamonkey.net          → Audio-CDN-Knoten (funktional, NICHT blocken)
+!   4. stream.schlagerradio.de            → Eigentlicher Audiostream des Senders
+!   5. leg-b2.stream42.radiohost.de       → Radiohost-CDN (alternativer Streaming-Provider)
+!
 ! Hintergrund:
 ! Technisat-Internetradiogeräte (z.B. AudioMaster M3) nutzen das wifiradiofrontier.com-Portal
 ! (Frontier Silicon / vTuner). Das Subdomain-Schema "shim-*" ist eine Werbe- und Tracking-Schicht,
@@ -30,8 +37,16 @@
 ! --- Absolut Radio Tracking (sm.absolutradio.de = Streaming-Messpixel) ---
 ||sm.absolutradio.de^
 
+! --- StreamMonkey Listener-Tracking (frontend.streamonkey.net) ---
+! ACHTUNG: frontend.streamonkey.net dient gleichzeitig als Playlist-Resolver UND Tracking-API.
+! Blocken KANN den Senderwechsel unterbrechen (kein Stream-Start), daher auskommentiert.
+! Nur aktivieren wenn im Test bestätigt wird, dass Streams trotzdem starten:
+! ||frontend.streamonkey.net^
+!
+! edge*.streamonkey.net = Audio-CDN → NICHT blocken, sonst kein Ton.
+
 ! --- Falls das Gerät selbst Telemetrie sendet (Technisat-spezifisch) ---
 ! Auskommentiert – erst aktivieren wenn im AdGuard-Log bestätigt:
 ! ||update.technisat.de^
-! ||telementry.technisat.de^
+! ||telemetry.technisat.de^
 ! ||analytics.technisat.de^
