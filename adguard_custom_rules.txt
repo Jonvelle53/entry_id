@@ -1,0 +1,37 @@
+! Title: Technisat / wifiradiofrontier Tracking Prevention
+! Description: Blockiert Tracking- und Werbe-Domains der Technisat-Internetradio-Infrastruktur (Frontier Silicon / vTuner Portal)
+! Erstellt für: AdGuard Home (Home Assistant Add-on)
+! Letzte Aktualisierung: 2026-06-02
+!
+! Hintergrund:
+! Technisat-Internetradiogeräte (z.B. AudioMaster M3) nutzen das wifiradiofrontier.com-Portal
+! (Frontier Silicon / vTuner). Das Subdomain-Schema "shim-*" ist eine Werbe- und Tracking-Schicht,
+! die zwischen dem Gerät und dem eigentlichen Portal-Backend sitzt.
+!
+! DNS-Kette laut AdGuard-Log:
+!   technisat2.wifiradiofrontier.com → CNAME shim-sec.wifiradiofrontier.com → 49.13.34.80
+!
+! WICHTIG: Die Hauptdomains (wifiradiofrontier.com, technisat2.wifiradiofrontier.com) werden
+! NICHT geblockt, da sonst die Senderliste und Metadaten des Geräts nicht mehr funktionieren!
+! Nur die Tracking/Ad-Shim-Subdomains werden blockiert.
+
+! --- Frontier Silicon / vTuner Tracking-Shims ---
+||shim-sec.wifiradiofrontier.com^
+||shim.wifiradiofrontier.com^
+||ad.wifiradiofrontier.com^
+||ads.wifiradiofrontier.com^
+||track.wifiradiofrontier.com^
+||analytics.wifiradiofrontier.com^
+||stat.wifiradiofrontier.com^
+||stats.wifiradiofrontier.com^
+||metrics.wifiradiofrontier.com^
+||telemetry.wifiradiofrontier.com^
+
+! --- Absolut Radio Tracking (sm.absolutradio.de = Streaming-Messpixel) ---
+||sm.absolutradio.de^
+
+! --- Falls das Gerät selbst Telemetrie sendet (Technisat-spezifisch) ---
+! Auskommentiert – erst aktivieren wenn im AdGuard-Log bestätigt:
+! ||update.technisat.de^
+! ||telementry.technisat.de^
+! ||analytics.technisat.de^
