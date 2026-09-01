@@ -75,6 +75,20 @@ Upload — daher ist die Leitungsstabilität die vorrangige Baustelle.
 4. **Große Uploads** bis zur Stabilisierung über **5G**.
 5. Firmware ist bereits aktuell (4.2.7); Kabel wurde neu gesteckt.
 
+## SQM / Bufferbloat — behoben (Update 01.09. 15:0x)
+Am UCG Max wurden **Smart Queues** aktiviert (WAN → Telekom):
+- **Download 220 / Upload 40 Mbit/s** (knapp unter Sync 251/44).
+- Bufferbloat-Test (waveform.com): **Note A+** — Ruhe 9 ms, unter Download-Last **+5 ms**,
+  unter Upload-Last **+0 ms**.
+- Verifikation: externer Foto-Upload **340 MB / 115 Fotos, 15:03–15:11** lief **ohne Abbruch**
+  durch (Durchsatz schwankte durch Klein-Datei-Overhead, aber stetiger Fortschritt, kein Resync
+  im Fenster).
+
+**Klarstellung:** SQM behebt **Bufferbloat** (Latenz-/Durchsatzeinbruch bei Sättigung), **nicht**
+die DSL-Resyncs. Config-Gegencheck ergab zudem: Bridge-Modus ok, **VLAN 7 genau einmal getaggt**
+(im DrayTek, VDSL2/G.fast Customer-Tag = 7; UCG-WAN „VLAN-ID" bewusst aus), PPPoE + MTU 1492
+korrekt. Die Resyncs sind also **kein Konfig-Fehler** → Telekom-Meldung bleibt der Weg.
+
 ---
 
 ## Anhang: Telekom-Störungsmeldung (Platzhalter ausfüllen)
